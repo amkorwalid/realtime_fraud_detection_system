@@ -1,6 +1,5 @@
 import polars as pl
 from pathlib import Path
-import polars.selectors as cs
 
 file_path = Path.cwd().parent / "data" / "raw" / "dataset.csv"
 print(f"Reading data from: {file_path}")
