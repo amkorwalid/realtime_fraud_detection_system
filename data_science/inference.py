@@ -4,7 +4,7 @@ import numpy as np
 
 
 def load_models():
-    path = Path.cwd() / "data_science"/ "models"
+    path = Path.cwd() / "data_science" / "models"
     path_xgb_model = Path(path, "xgb_model.pkl")
     path_lgbm_model = Path(path, "lgbm_model.pkl")
 
@@ -13,8 +13,14 @@ def load_models():
 
     return loaded_xgb_model, loaded_lgbm_model
 
+def inference_model(model, x, threshold=0.9):
 
-def inference(xgb_model, lgbm_model, x, weight=0.80, threshold=0.95):
+    probs = model.predict_proba(x)[:, 1]
+    preds = (probs >= threshold).astype(int)
+
+    return preds
+
+def inference_model_ensemble(xgb_model, lgbm_model, x, weight=0.6, threshold=0.9):
 
     xgb_probs = xgb_model.predict_proba(x)[:, 1]
     lgbm_probs = lgbm_model.predict_proba(x)[:, 1]
