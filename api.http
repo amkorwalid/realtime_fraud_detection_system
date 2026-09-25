@@ -1,0 +1,26 @@
+POST http://localhost:8000/api/inference
+Content-Type: application/json
+
+[{
+  "step": 350,
+  "type": "CASH_OUT",
+  "amount": 91376.52,
+  "nameOrig": "C1432238979",
+  "oldbalanceOrg": 84646.0,
+  "newbalanceOrig": 0.0,
+  "nameDest": "C1765254864",
+  "oldbalanceDest": 114100.85,
+  "newbalanceDest": 205477.37
+},
+{
+  "step": 350,
+  "type": "CASH_OUT",
+  "amount": 91376.52,
+  "nameOrig": "C1432238979",
+  "oldbalanceOrg": 84646.0,
+  "newbalanceOrig": 0.0,
+  "nameDest": "C1765254864",
+  "oldbalanceDest": 114100.85,
+  "newbalanceDest": 205477.37
+}
+]

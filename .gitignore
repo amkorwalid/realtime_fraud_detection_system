@@ -2,3 +2,4 @@
 /data
 /data_science/notebooks/.ipynb_checkpoints
 /data_science/__pycache__
+*/__pycache__/*
