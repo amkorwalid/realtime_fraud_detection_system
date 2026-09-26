@@ -21,7 +21,7 @@ def save_response_to_file(result, filename="response.json"):
         json.dump(result, f, indent=4)
 
 # async function to process a batch of requests
-async def process_batch(idx_start, idx_end):
+async def process_batch(idx_start, idx_end, start_time):
     async with httpx.AsyncClient() as client:
         response = await client.post(f"http://{IP_INFERENCE_SERVER}:{PORT_INFERENCE_SERVER}/api/inference", json=data[idx_start:idx_end], timeout=5)
         response.raise_for_status()
@@ -29,7 +29,8 @@ async def process_batch(idx_start, idx_end):
     query = {
         "data": data[idx_start:idx_end],
         "result": result[idx_start:idx_end],
-        "response": response.json()
+        "response": response.json(),
+        "time_taken": time.perf_counter() - start_time
     }
     save_response_to_file(query, filename=f"response_{idx_start}_{idx_end}.json")
 
@@ -49,7 +50,7 @@ for bucket_size in buckets_batchs:
     start_time = time.perf_counter()
     idx_start = idx_end
     idx_end = idx_start + bucket_size
-    asyncio.run(process_batch(idx_start, idx_end))
+    asyncio.run(process_batch(idx_start, idx_end, start_time))
     end_time = time.perf_counter()
     if (end_time - start_time ) > 1.0:
         print(f"Warning: Processing time exceeded 1 second for bucket starting at index {idx_start}. Time taken: {end_time - start_time:.2f}s")
